@@ -10,19 +10,24 @@ const Login = () => {
         username: "",
         password: ""
     });
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { signin, isAuthenticated, user: userAuth } = useAuth();
 
     const handleLogin = async () => {
+        setLoading(true);
         if (!user.username || !user.password) {
             toast.error("Por favor, rellene todos los campos");
+            setLoading(false);
             return;
         }
         try {
             await signin(user);
+            setLoading(false);
             navigate("/menu");
         } catch (error) {
             toast.error(error.response.data.message);
+            setLoading(false);
             console.error(error);
         }
     }
@@ -43,7 +48,9 @@ const Login = () => {
                         <Input placeholder="Contraseña" size="lg" variant="underlined" onChange={(e) => setUser({ ...user, password: e.target.value })} type="password" />
                     </div>
                     <div>
-                        <Button color="#fff" variant="bordered" size="lg" onClick={() => handleLogin()}>Ingresar</Button>
+                        <Button isLoading={loading} color="#fff" variant="bordered" size="lg" onClick={() => handleLogin()}>
+                            {loading ? "Cargando..." : "Ingresar"}
+                        </Button>
                     </div>
                 </div>
             </div>
