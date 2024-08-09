@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "sonner";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
     const [user, setUser] = useState({
         username: "",
         password: ""
     });
+    const [isVisible, setIsVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { signin, isAuthenticated, user: userAuth } = useAuth();
@@ -38,6 +41,8 @@ const Login = () => {
         }
     }, [isAuthenticated, userAuth]);
 
+    const toggleVisibility = () => setIsVisible(!isVisible);
+
     return (
         <div className="flex flex-1 w-full h-screen bg-white">
             <div className="flex flex-col items-center justify-center w-full h-full">
@@ -45,7 +50,22 @@ const Login = () => {
                 <div className="flex flex-col items-center justify-center w-80 h-80 rounded-lg gap-12">
                     <div className="flex flex-col justify-center items-center w-full gap-6">
                         <Input placeholder="Nombre de usuario" size="lg" variant="underlined" onChange={(e) => setUser({ ...user, username: e.target.value })} />
-                        <Input placeholder="Contraseña" size="lg" variant="underlined" onChange={(e) => setUser({ ...user, password: e.target.value })} type="password" />
+                        <Input
+                            placeholder="Contraseña"
+                            size="lg"
+                            variant="underlined"
+                            onChange={(e) => setUser({ ...user, password: e.target.value })}
+                            type={isVisible ? "text" : "password"}
+                            endContent={
+                                <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
+                                    {isVisible ? (
+                                        <FaEye className="text-2xl text-default-400 pointer-events-none" />
+                                    ) : (
+                                        <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
+                                    )}
+                                </button>
+                            }
+                        />
                     </div>
                     <div>
                         <Button isLoading={loading} color="#fff" variant="bordered" size="lg" onClick={() => handleLogin()}>
