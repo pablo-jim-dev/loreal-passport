@@ -20,7 +20,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route element={<ProtectedRoute />}>
+          <Route element={<ProtectedRoute />} >
             <Route path="/menu" element={<Menu />} />
             <Route path="/scanner" element={<Scanner />} />
             <Route path="/list" element={<List />} />
