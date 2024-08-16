@@ -15,7 +15,7 @@ const Header = () => {
           {location.pathname === '/' || location.pathname === '/menu' ? (<></>) : (<Button isIconOnly className='' onClick={() => navigate(-1)}><IoChevronBackOutline size={20} /></Button>)}
         </div>
         <Link className='flex flex-1 justify-center items-center' to={'/menu'}>
-          <img src={Loreal} alt="Loreal" className='h-10 w-auto' />
+          {/* <img src={Loreal} alt="Loreal" className='h-10 w-auto' /> */}
         </Link>
         <div className='flex flex-1'></div>
       </div>
